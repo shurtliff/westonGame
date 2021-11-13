@@ -15,6 +15,7 @@ class Character:
         self.name = ''
         self.color = ''
         self.mapObject = mapObject
+        self.collection = 0
 
         # Start each piece off at the top left corner.
         self.x, self.y = mapObject.x, mapObject.y
@@ -28,11 +29,31 @@ class Character:
     def move(self, move):
         x = self.mapObject.x+move[0]
         y = self.mapObject.y+move[1]
-        w = self.width
-        h = self.height
+        w = self.mapObject.width
+        h = self.mapObject.height
         playerrec = pygame.Rect([x,y,w,h])
         check = False
         if (playerrec.collidelistall(self.tiles)): #this tests every tile with the player rectangle
             return
         self.mapObject.x = x
         self.mapObject.y = y
+    def collectItem(self, collectItems, collectables):
+        rect = self.getRect()
+        items = rect.collidelistall(collectItems)
+        # if items :
+        #     itemsToRemove = []
+        #     for x, y, colTile in collectables.tiles():
+        #         if (colTile):
+        #             colRect = pygame.Rect([(x*self.width), (y*self.height), self.width, self.height])
+        #             if colRect.collidelistall(items) :
+        #                 self.collection += 1
+        #                 itemsToRemove.append(colTile)
+        #     if itemsToRemove :
+        #         for colRemove in itemsToRemove :
+        #             collectables.remove(colRemove)
+    def getRect(self):
+        x = self.mapObject.x
+        y = self.mapObject.y
+        w = self.mapObject.width
+        h = self.mapObject.height
+        return pygame.Rect([x,y,w,h])

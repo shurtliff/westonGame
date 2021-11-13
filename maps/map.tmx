@@ -329,7 +329,7 @@
 </data>
  </layer>
  <objectgroup id="9" name="Object Layer 1">
-  <object id="1" name="player" x="309.129" y="487.079" width="30" height="30"/>
+  <object id="1" name="player" x="309.129" y="487.079" width="5" height="5"/>
  </objectgroup>
  <layer id="7" name="items" width="70" height="50">
   <data encoding="csv">

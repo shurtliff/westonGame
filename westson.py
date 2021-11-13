@@ -15,23 +15,29 @@ pygame.init()
 #caption for the game
 pygame.display.set_caption("My first game in pygame")
 tiled_map = load_pygame('maps/map.tmx')
-tilewidth = tiled_map.tilewidth
-tileheight = tiled_map.tileheight
+TILEWIDTH = tiled_map.tilewidth
+TILEHEIGHT = tiled_map.tileheight
 collectables = tiled_map.get_layer_by_name('collectables')
-collision = tiled_map.get_layer_by_name('collision')
+COLLISION = tiled_map.get_layer_by_name('collision')
 tiles = []
-for x, y, tile in collision.tiles():
+for x, y, tile in COLLISION.tiles():
     if (tile):
-         tiles.append(pygame.Rect([(x*tilewidth), (y*tileheight), tilewidth, tileheight]));
+         tiles.append(pygame.Rect([(x*(TILEWIDTH)), (y*TILEHEIGHT), TILEWIDTH, TILEHEIGHT]));
+collect = []
+for x, y, colTile in collectables.tiles():
+    if (colTile):
+         collect.append(pygame.Rect([(x*TILEWIDTH), (y*TILEHEIGHT), TILEWIDTH/2, TILEHEIGHT/2]));
 filename = 'sprites/characters.png'
 characters = SpriteSheet(filename)
-pygame.key.set_repeat(1, 10)
+pygame.key.set_repeat(1, 50)
         # Create a black king.
 # my_player = (68, 70, 85, 85)
 # my_player_image = characters.image_at(my_player)
 
 CAMERA = tiled_map.get_object_by_name("player")
 player = Character(characters, SCREEN, tiles, CAMERA)
+player.height = TILEWIDTH
+player.width = TILEWIDTH
 player.name = 'bugSplat'
 #game loop
 while True:
@@ -40,10 +46,10 @@ while True:
             pygame.quit()
             sys.exit()
         for layer in tiled_map.layers:
-            if isinstance(layer, pytmx.TiledTileLayer) and (layer!=collision):
+            if isinstance(layer, pytmx.TiledTileLayer) and (layer!=COLLISION):
                 for x, y, tile in layer.tiles():
                     if (tile):
-                        SCREEN.blit(tile, [(x*tilewidth) - CAMERA.x +(SCREENWIDTH/2) , (y*tileheight) - CAMERA.y + (SCREENHEIGHT/2)])
+                        SCREEN.blit(tile, [(x*TILEWIDTH) - CAMERA.x +(SCREENWIDTH/2) , (y*TILEHEIGHT) - CAMERA.y + (SCREENHEIGHT/2)])
 
             # elif isinstance(layer, pytmx.TiledObjectGroup):
             #     for object in layer:
@@ -68,6 +74,6 @@ while True:
         # tiled_map.get_object_by_name("player").x += pos[0]
         # tiled_map.get_object_by_name("player").y += pos[1]
         player.move((pos[0], pos[1]))
-
+        player.collectItem(collect, collectables)
         player.blitme()
         pygame.display.update()
