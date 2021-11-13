@@ -37,20 +37,13 @@ class Character:
             return
         self.mapObject.x = x
         self.mapObject.y = y
-    def collectItem(self, collectItems, collectables):
+    def collectItem(self, collectables):
         rect = self.getRect()
-        items = rect.collidelistall(collectItems)
-        # if items :
-        #     itemsToRemove = []
-        #     for x, y, colTile in collectables.tiles():
-        #         if (colTile):
-        #             colRect = pygame.Rect([(x*self.width), (y*self.height), self.width, self.height])
-        #             if colRect.collidelistall(items) :
-        #                 self.collection += 1
-        #                 itemsToRemove.append(colTile)
-        #     if itemsToRemove :
-        #         for colRemove in itemsToRemove :
-        #             collectables.remove(colRemove)
+        removCol = []
+        for colItem in collectables:
+            if colItem.boundingBox.colliderect(rect):
+                colItem.hide()
+                self.collection += 1
     def getRect(self):
         x = self.mapObject.x
         y = self.mapObject.y

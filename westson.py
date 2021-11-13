@@ -6,6 +6,7 @@ from pytmx.util_pygame import load_pygame
 
 #initialize pygame & window
 from character import Character
+from collectable import Collectable
 from constants import *
 from spritesheet import SpriteSheet
 
@@ -23,10 +24,10 @@ tiles = []
 for x, y, tile in COLLISION.tiles():
     if (tile):
          tiles.append(pygame.Rect([(x*(TILEWIDTH)), (y*TILEHEIGHT), TILEWIDTH, TILEHEIGHT]));
-collect = []
+collects = []
 for x, y, colTile in collectables.tiles():
     if (colTile):
-         collect.append(pygame.Rect([(x*TILEWIDTH), (y*TILEHEIGHT), TILEWIDTH/2, TILEHEIGHT/2]));
+        collects.append(Collectable(colTile, x, y, pygame.Rect([(x*TILEWIDTH), (y*TILEHEIGHT), TILEWIDTH/2, TILEHEIGHT/2])))
 filename = 'sprites/characters.png'
 characters = SpriteSheet(filename)
 pygame.key.set_repeat(1, 50)
@@ -46,7 +47,7 @@ while True:
             pygame.quit()
             sys.exit()
         for layer in tiled_map.layers:
-            if isinstance(layer, pytmx.TiledTileLayer) and (layer!=COLLISION):
+            if isinstance(layer, pytmx.TiledTileLayer) and (layer!=COLLISION) and ((layer != collectables) ):
                 for x, y, tile in layer.tiles():
                     if (tile):
                         SCREEN.blit(tile, [(x*TILEWIDTH) - CAMERA.x +(SCREENWIDTH/2) , (y*TILEHEIGHT) - CAMERA.y + (SCREENHEIGHT/2)])
@@ -74,6 +75,9 @@ while True:
         # tiled_map.get_object_by_name("player").x += pos[0]
         # tiled_map.get_object_by_name("player").y += pos[1]
         player.move((pos[0], pos[1]))
-        player.collectItem(collect, collectables)
+        player.collectItem(collects)
         player.blitme()
+        for collect in collects :
+            if collect.show :
+                SCREEN.blit(collect.tile, [(collect.x*TILEWIDTH) - CAMERA.x +(SCREENWIDTH/2) , (collect.y*TILEHEIGHT) - CAMERA.y + (SCREENHEIGHT/2)])
         pygame.display.update()
