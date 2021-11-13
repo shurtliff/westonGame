@@ -1,6 +1,4 @@
 import os
-import level1
-import level2
 import level
 
 #initialize pygame & window

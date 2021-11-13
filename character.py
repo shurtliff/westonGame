@@ -1,3 +1,5 @@
+import os
+
 import pygame
 from constants import *
 
@@ -7,7 +9,7 @@ class Character:
 
     def __init__(self, spriteSheet, screen, tiles, mapObject):
         """Initialize attributes to represent a ches piece."""
-        self.height = 32
+        self.height = 64
         self.width = 32
         self.spriteSheet = spriteSheet
         self.screen = screen
@@ -19,7 +21,8 @@ class Character:
 
         # Start each piece off at the top left corner.
         self.x, self.y = mapObject.x, mapObject.y
-        self.image = spriteSheet.get_image(0, 0, self.height, self.width)
+        self.image = pygame.image.load(os.path.join("sprites/SingleChar.png")).convert_alpha();
+        # self.image = spriteSheet.get_image(0, 0, self.width, self.height)
 
     def blitme(self):
         """Draw the piece at its current location."""
