@@ -1,8 +1,7 @@
-import pygame
-import sys
 import os
-import pytmx
-from pytmx.util_pygame import load_pygame
+import level1
+import level2
+import level
 
 #initialize pygame & window
 from character import Character
@@ -16,7 +15,8 @@ pygame.init()
 #caption for the game
 pygame.display.set_caption("My first game in pygame")
 #game loop
-import level2
 
-level_1 = level2.Level2()
-level_1.GO()
+level = level.Level()
+level.GO('maps/map.tmx')
+level.GO('maps/map2.tmx')
+level.GO('maps/map3.tmx')
