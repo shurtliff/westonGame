@@ -21,11 +21,11 @@ collectables = tiled_map.get_layer_by_name('collectables')
 collision = tiled_map.get_layer_by_name('collision')
 tiles = []
 for x, y, tile in collision.tiles():
-        if (tile):
-             tiles.append(pygame.Rect([(x*tilewidth), (y*tileheight), tilewidth, tileheight]));
+    if (tile):
+         tiles.append(pygame.Rect([(x*tilewidth), (y*tileheight), tilewidth, tileheight]));
 filename = 'sprites/characters.png'
 characters = SpriteSheet(filename)
-
+pygame.key.set_repeat(1, 10)
         # Create a black king.
 # my_player = (68, 70, 85, 85)
 # my_player_image = characters.image_at(my_player)
@@ -51,20 +51,20 @@ while True:
             #             SCREEN.blit(player.image, [object.x - CAMERA.x +(SCREENWIDTH/2), object.y - CAMERA.y + (SCREENHEIGHT/2)])
         pos = [0,0]
         for events in pygame.event.get(): #get all pygame events
-                if events.type == pygame.QUIT: #if event is quit then shutdown window and program
-                    pygame.quit()
-                    sys.exit()
+            if events.type == pygame.QUIT: #if event is quit then shutdown window and program
+                pygame.quit()
+                sys.exit()
 
         PRESSED = pygame.key.get_pressed()
 
         if PRESSED[pygame.K_LEFT]:
-                pos[0]-=10
+            pos[0]-=10
         elif PRESSED[pygame.K_RIGHT]:
-                pos[0]+=10
+            pos[0]+=10
         if PRESSED[pygame.K_UP]:
-                pos[1]-=10
+            pos[1]-=10
         elif PRESSED[pygame.K_DOWN]:
-                pos[1]+=10
+            pos[1]+=10
         # tiled_map.get_object_by_name("player").x += pos[0]
         # tiled_map.get_object_by_name("player").y += pos[1]
         player.move((pos[0], pos[1]))
