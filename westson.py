@@ -19,6 +19,7 @@ tiled_map = load_pygame('maps/map.tmx')
 TILEWIDTH = tiled_map.tilewidth
 TILEHEIGHT = tiled_map.tileheight
 collectables = tiled_map.get_layer_by_name('collectables')
+endLayer = tiled_map.get_layer_by_name('endlayer')
 COLLISION = tiled_map.get_layer_by_name('collision')
 tiles = []
 for x, y, tile in COLLISION.tiles():
@@ -27,7 +28,11 @@ for x, y, tile in COLLISION.tiles():
 collects = []
 for x, y, colTile in collectables.tiles():
     if (colTile):
-        collects.append(Collectable(colTile, x, y, pygame.Rect([(x*TILEWIDTH), (y*TILEHEIGHT), TILEWIDTH/2, TILEHEIGHT/2])))
+        collects.append(Collectable(colTile, x, y, pygame.Rect([(x*TILEWIDTH), (y*TILEHEIGHT), TILEWIDTH, TILEHEIGHT])))
+ends = []
+for x, y, endTile in endLayer.tiles():
+    if (endTile):
+         ends.append(pygame.Rect([(x*(TILEWIDTH)), (y*TILEHEIGHT), TILEWIDTH, TILEHEIGHT]));
 filename = 'sprites/characters.png'
 characters = SpriteSheet(filename)
 pygame.key.set_repeat(1, 50)
@@ -40,8 +45,9 @@ player = Character(characters, SCREEN, tiles, CAMERA)
 player.height = TILEWIDTH
 player.width = TILEWIDTH
 player.name = 'bugSplat'
+won = False
 #game loop
-while True:
+while won == False:
     for events in pygame.event.get(): #get all pygame events
         if events.type == pygame.QUIT: #if event is quit then shutdown window and program
             pygame.quit()
@@ -77,6 +83,8 @@ while True:
         player.move((pos[0], pos[1]))
         player.collectItem(collects)
         player.blitme()
+        if player.collection > collectables.collect_count :
+            won = player.checkLevel(ends)
         for collect in collects :
             if collect.show :
                 SCREEN.blit(collect.tile, [(collect.x*TILEWIDTH) - CAMERA.x +(SCREENWIDTH/2) , (collect.y*TILEHEIGHT) - CAMERA.y + (SCREENHEIGHT/2)])

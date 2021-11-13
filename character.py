@@ -39,9 +39,8 @@ class Character:
         self.mapObject.y = y
     def collectItem(self, collectables):
         rect = self.getRect()
-        removCol = []
         for colItem in collectables:
-            if colItem.boundingBox.colliderect(rect):
+            if colItem.boundingBox.colliderect(rect) and colItem.isVisible():
                 colItem.hide()
                 self.collection += 1
     def getRect(self):
@@ -50,3 +49,9 @@ class Character:
         w = self.mapObject.width
         h = self.mapObject.height
         return pygame.Rect([x,y,w,h])
+
+    def checkLevel(self, ends):
+        rect = self.getRect()
+        if rect.collidelistall(ends) :
+            return True
+        return False
