@@ -74,5 +74,29 @@
    <wangtile tileid="42" wangid="1,1,1,0,0,0,1,1"/>
    <wangtile tileid="43" wangid="1,0,0,0,0,0,1,1"/>
   </wangset>
+  <wangset name="island" type="mixed" tile="-1">
+   <wangcolor name="" color="#ff0000" tile="-1" probability="1"/>
+   <wangtile tileid="160" wangid="0,0,1,1,1,0,0,0"/>
+   <wangtile tileid="161" wangid="0,0,1,1,1,1,1,0"/>
+   <wangtile tileid="162" wangid="0,0,0,0,1,1,1,0"/>
+   <wangtile tileid="176" wangid="1,1,1,1,1,0,0,0"/>
+   <wangtile tileid="177" wangid="1,1,1,1,1,1,1,1"/>
+   <wangtile tileid="178" wangid="1,0,0,0,1,1,1,1"/>
+   <wangtile tileid="192" wangid="1,1,1,0,0,0,0,0"/>
+   <wangtile tileid="193" wangid="1,1,1,0,0,0,1,1"/>
+   <wangtile tileid="194" wangid="1,0,0,0,0,0,1,1"/>
+  </wangset>
+  <wangset name="Dirtgrass3" type="mixed" tile="-1">
+   <wangcolor name="" color="#ff0000" tile="-1" probability="1"/>
+   <wangtile tileid="86" wangid="0,0,1,1,1,0,0,0"/>
+   <wangtile tileid="87" wangid="0,0,1,1,1,1,1,0"/>
+   <wangtile tileid="88" wangid="0,0,0,0,1,1,1,0"/>
+   <wangtile tileid="102" wangid="1,1,1,1,1,0,0,0"/>
+   <wangtile tileid="103" wangid="1,1,1,1,1,1,1,1"/>
+   <wangtile tileid="104" wangid="1,0,0,0,1,1,1,1"/>
+   <wangtile tileid="118" wangid="1,1,1,0,0,0,0,0"/>
+   <wangtile tileid="119" wangid="1,1,1,0,0,0,1,1"/>
+   <wangtile tileid="120" wangid="1,0,0,0,0,0,1,1"/>
+  </wangset>
  </wangsets>
 </tileset>
