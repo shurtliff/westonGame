@@ -6,18 +6,15 @@ from pytmx.util_pygame import load_pygame
 
 #initialize pygame & window
 from character import Character
+from constants import *
 from spritesheet import SpriteSheet
 
 os.environ["SDL_VIDEO_CENTERED"] = "1"
 pygame.init()
-SCREENWIDTH = 500
-SCREENHEIGHT = 500
-SCREENSIZE = [SCREENWIDTH, SCREENHEIGHT]
-SCREEN = pygame.display.set_mode(SCREENSIZE)
 
 #caption for the game
 pygame.display.set_caption("My first game in pygame")
-tiled_map = load_pygame('maps/testing.tmx')
+tiled_map = load_pygame('maps/map.tmx')
 tilewidth = tiled_map.tilewidth
 tileheight = tiled_map.tileheight
 collectables = tiled_map.get_layer_by_name('collectables')
@@ -33,9 +30,9 @@ characters = SpriteSheet(filename)
 # my_player = (68, 70, 85, 85)
 # my_player_image = characters.image_at(my_player)
 
-player = Character(characters, SCREEN, tiles)
-player.name = 'bugSplat'
 CAMERA = tiled_map.get_object_by_name("player")
+player = Character(characters, SCREEN, tiles, CAMERA)
+player.name = 'bugSplat'
 #game loop
 while True:
     for events in pygame.event.get(): #get all pygame events
@@ -46,12 +43,12 @@ while True:
             if isinstance(layer, pytmx.TiledTileLayer) and (layer!=collision):
                 for x, y, tile in layer.tiles():
                     if (tile):
-                        SCREEN.blit(tile, [x*tilewidth,y*tileheight])
+                        SCREEN.blit(tile, [(x*tilewidth) - CAMERA.x +(SCREENWIDTH/2) , (y*tileheight) - CAMERA.y + (SCREENHEIGHT/2)])
 
             # elif isinstance(layer, pytmx.TiledObjectGroup):
             #     for object in layer:
-            #         if (object.type=='player'):
-            #             SCREEN.blit(player, (object.x, object.y))
+            #         if (object.type=='Player'):
+            #             SCREEN.blit(player.image, [object.x - CAMERA.x +(SCREENWIDTH/2), object.y - CAMERA.y + (SCREENHEIGHT/2)])
         pos = [0,0]
         for events in pygame.event.get(): #get all pygame events
                 if events.type == pygame.QUIT: #if event is quit then shutdown window and program
@@ -68,7 +65,8 @@ while True:
                 pos[1]-=10
         elif PRESSED[pygame.K_DOWN]:
                 pos[1]+=10
-
+        # tiled_map.get_object_by_name("player").x += pos[0]
+        # tiled_map.get_object_by_name("player").y += pos[1]
         player.move((pos[0], pos[1]))
 
         player.blitme()
